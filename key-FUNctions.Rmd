@@ -1,0 +1,94 @@
+---
+title: "Putting the fun in FUNctions"
+author: "your name here"
+date: "1/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com/), who adapted it from Umi Hoshijima, who adapted it from [Software Carpentry](http://swcarpentry.github.io/r-novice-inflammation/02-func-R/index.html)!
+
+# 1. What do functions do?
+
+**Functions** allow you to 'do' things in R. The basic structure of a function is always a term with parentheses, and your inputs go in those parentheses as **arguments**. For example:  
+- `mean()` is a function that lets you **take the mean** of the input.  
+
+```{r}
+# making some data
+dat <- c(3, 5, 6, 9)
+
+mean(dat)
+```
+
+- `plot()` is a function that allows you to **make a plot**, and the arguments lets you customize that plot.  
+
+```{r}
+# making some fake data to put into the plot
+yaxis <- sqrt(dat) + 3
+
+plot(x = dat, y = yaxis)
+```
+
+# 2. Writing your own functions
+
+Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure is:
+
+function.name <- function() {
+      some operations here
+      return(output of those operations)
+}  
+
+Let's put that into practice! For example, R does not have a function to calculate standard error. Frustrating! However, you can write your own function to do that. (As review, standard error is standard deviation divded by the square root of the number of samples.)
+
+```{r}
+se <- function(x) {
+  
+  sd_x <- sd(x)
+  n <- length(x)
+  se_x <- sd_x/sqrt(n)
+  return(se_x)
+  
+}
+```
+
+Now, you can see if it works.
+
+```{r}
+se(dat)
+```
+
+## Farenheit into celsius
+
+The US uses farenheit, bleh. Let's convert that into celsius. The formula for converting farenheit into celsius is:  
+
+$C = \frac{F-32}{1.8}$
+
+And the formula for converting celsius into farenheit is:
+
+$F = C*1.8 + 32$
+
+We can write a function called `f_to_c` that converts farenheit to celsius.
+
+```{r}
+
+f_to_c <- function(x) {
+  convert <- (x-32)/1.8
+  return(convert)
+}
+
+```
+
+And then, we can write a function called `c_to_f` that converts celsius into farenheit.
+
+```{r}
+
+```
+
+
+
+
+
+
