@@ -60,17 +60,17 @@ Now, you can see if it works.
 se(dat)
 ```
 
-## Farenheit into celsius
+## Fahrenheit into celsius
 
-The US uses farenheit, bleh. Let's convert that into celsius. The formula for converting farenheit into celsius is:  
+The US uses fahrenheit, bleh. Let's convert that into celsius. The formula for converting fahrenheit into celsius is:  
 
 $C = \frac{F-32}{1.8}$
 
-And the formula for converting celsius into farenheit is:
+And the formula for converting celsius into fahrenheit is:
 
 $F = C*1.8 + 32$
 
-We can write a function called `f_to_c` that converts farenheit to celsius.
+We can write a function called `f_to_c` that converts fahrenheit to celsius.
 
 ```{r}
 
@@ -81,12 +81,81 @@ f_to_c <- function(x) {
 
 ```
 
-And then, we can write a function called `c_to_f` that converts celsius into farenheit.
+Yay! Now, we can see what 78 fahrenheit is in celsius.
+```{r}
+f_to_c(78)
+```
 
+## A bit fancier
+
+Let's say that sometimes we want to convert between celsius, fahrenheit, and kelvin. We can write a function with more than one argument and incorporate `if()` statements in order to be able to do that.  
+
+In order to wrap our heads around this, let's think of the function we just wrote, `f_to_c()`. You could write a separate function every time you wanted to convert between temperatures: `c_to_f()` to convert from celsius to fahrenheit, `c_to_k()` to convert from celsius to kelvin, and so on and so forth.  
+
+However, this would get really tedious! For this reason, we can put all of the components of those functions into one, and designate arguments for switching between each conversion. It's like compressing a bunch of different operations (the conversion) into one thing (the function), and calling the right conversion every time you wanted to use the function (by using the arguments).  
+
+Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius, fahrenheit, and kelvin. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if()` statement allows us to say:  
+- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$.  
+- **If** the inputs are celsius and kelvin, then use this conversion: $x + 273.15$.  
+And so on.
+
+```{r}
+             # arguments in: from, to, and the temperature
+temp.conv <- function(from, to, x) {
+  
+  # if `from` is "celsius" or "c", and `to` is "fahrenheit" or "f", then
+  if(from == "celsius" || from == "c" & to == "fahrenheit" || to == "f") {
+    # convert from celsius to fahrenheit
+    convert <- x*1.8 + 32
+  }
+  
+  # if `from` is "celsius" or "c", and `to` is "kelvin" or "k", then
+  if(from == "celsius" || from == "c" & to == "kelvin" || to == "k") {
+    # convert from celsius to kelvin
+    convert <- x + 273.15
+  }
+  
+  # if `from` is "fahrenheit" or "f", and `to` is "celsius" or "c", then
+  if(from == "fahrenheit" || from == "f" & to == "celsius" || to == "c") {
+    # convert from fahrenheit to kelvin
+    convert <- (x - 32)/1.8
+  }
+
+  # if `from` is "fahrenheit" or "f", and `to` is "kelvin" or "k", then
+  if(from == "fahrenheit" || from == "f" & to == "kelvin" || to == "k") {
+    # convert from fahrenheit to kelvin
+    convert <- (x - 32) * (5/9) + 273.15
+  }
+
+  # if `from` is "kelvin" or "k", and `to` is "fahrenheit" or "f", then
+  if(from == "kelvin" || from == "k" & to == "fahrenheit" || to == "f") {
+    # convert from kelvin to fahrenheit
+    convert <- (x - 273.15) * (9/5) + 32
+  }
+
+  # if `from` is "kelvin" or "k", and `to` is "celsius" or "c", then
+  if(from == "kelvin" || from == "k" & to == "celsius" || to == "c") {
+    # convert from kelvin to celsius
+    convert <- 273.15 - x
+  }
+  
+  # return the converted value
+  return(convert)
+}
+```
+
+Let's try it out! I'll try converting 25 degrees celsius into kelvin.
+```{r}
+temp.conv("celsius", "kelvin", 25)
+temp.conv("c", "k", 18)
+
+temp.conv("k", "celsius", 15)
+```
+
+Try it out below!
 ```{r}
 
 ```
-
 
 
 
