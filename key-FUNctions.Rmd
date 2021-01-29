@@ -42,26 +42,7 @@ function.name <- function() {
       return(output of those operations)  
 }  
 
-Let's put that into practice! For example, R does not have a function to calculate standard error. Frustrating! However, you can write your own function to do that. (As review, standard error is standard deviation divided by the square root of the number of samples.)
-
-```{r}
-se <- function(x) {
-  
-  sd_x <- sd(x)
-  n <- length(x)
-  se_x <- sd_x/sqrt(n)
-  return(se_x)
-  
-}
-```
-
-Now, you can see if it works.
-
-```{r}
-se(dat)
-```
-
-## Fahrenheit into celsius
+Let's put that into practice by writing a function to convert temperature values!  
 
 The US uses fahrenheit, bleh. Let's convert that into celsius. The formula for converting fahrenheit into celsius is:  
 
