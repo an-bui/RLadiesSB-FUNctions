@@ -1,7 +1,7 @@
 ---
 title: "Putting the fun in FUNctions"
-author: "your name here"
-date: "1/25/2021"
+author: "An Bui"
+date: "24 February 2021"
 output: html_document
 ---
 
@@ -14,6 +14,7 @@ This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com
 # 1. What do functions do?
 
 **Functions** allow you to 'do' things in R. The basic structure of a function is always a term with parentheses, and your inputs go in those parentheses as **arguments**. For example:  
+
 - `mean()` is a function that lets you **take the mean** of the input.  
 
 ```{r}
@@ -36,12 +37,12 @@ plot(x = dat, y = yaxis)
 
 Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure is:
 
-function.name <- function() {
-      some operations here
-      return(output of those operations)
+function.name <- function() {  
+      some operations here  
+      return(output of those operations)  
 }  
 
-Let's put that into practice! For example, R does not have a function to calculate standard error. Frustrating! However, you can write your own function to do that. (As review, standard error is standard deviation divded by the square root of the number of samples.)
+Let's put that into practice! For example, R does not have a function to calculate standard error. Frustrating! However, you can write your own function to do that. (As review, standard error is standard deviation divided by the square root of the number of samples.)
 
 ```{r}
 se <- function(x) {
