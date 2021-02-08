@@ -3,6 +3,8 @@ title: "Putting the fun in FUNctions"
 author: "An Bui"
 date: "24 February 2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -95,30 +97,36 @@ And check to see if it works!
 
 ## A bit fancier
 
-Let's say that we want to convert between celsius and fahrenheit, but we don't want to have two separate functions for each. We can write a function with more than one argument and incorporate `if()` statements in order to be able to do that.  
+Let's say that we want to convert between celsius and fahrenheit, but we don't want to have two separate functions for each. We can write a function that uses **conditionals**, which tell our code to execute different actions depending on whether a condition is true or false. To do so, we can incorporate `if()` or `if/else()` statements within our function.  
 
 In order to wrap our heads around this, let's think of the functions we just wrote, `f_to_c()` and `c_to_f()`. We can put all of the components of those functions into one, and designate arguments for switching between each conversion. It's like compressing a bunch of different operations (the conversion) into one thing (the function), and calling the right conversion every time you wanted to use the function (by using the arguments).  
 
-Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius and fahrenheit. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if()` statement allows us to say:  
-- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$.  
-- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  
+Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius and fahrenheit. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if/else()` statement allows us to say:  
+- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$. **else...** 
+- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  **else...*
+- **If** the inputs are neither fahrenheit or celsius, then return *NA* and give us a warning message to let us know something is wrong (this last step is optional, but can really help to troubleshoot problematic code).
 
 ```{r}
-             # arguments in: from, to, and the temperature
+
+# arguments in: from, to, and the temperature
 temp.conv <- function(from, to, x) {
   
   # if `from` is "celsius" and `to` is "fahrenheit", then
   if(from == "celsius" & to == "fahrenheit") {
     # convert from celsius to fahrenheit
     convert <- x*1.8 + 32
-  }
-  
-  # if `from` is "fahrenheit" and `to` is "celsius", then
-  if(from == "fahrenheit" & to == "celsius") {
+    
+    # if `from` is "fahrenheit" and `to` is "celsius", then
+    } else if(from == "fahrenheit" & to == "celsius") {
     # convert from fahrenheit to celsius
     convert <- (x - 32)/1.8
-  }
-
+   
+    # if inputs that don't match either of the first two conditionals are supplied, give warning and return NA 
+    } else {
+      warning("The inputs provided (from = '", from, "' & to = '", to,"') are not as expected. Double check spelling.")
+      return(NA)
+    }
+  
   # return the converted value
   return(convert)
 }
@@ -126,7 +134,12 @@ temp.conv <- function(from, to, x) {
 
 Let's try it out! I'll try converting 25 degrees celsius into fahrenheit.
 ```{r}
-temp.conv("celsius", "fahrenheit", 25)
+temp.conv(from = "celsius", to = "fahrenheit", x = 25)
+```
+
+What if we supply inputs that aren't "celsius" and "fahrenheight"?
+```{r}
+temp.conv(from = "c", to = "f", x = 25)
 ```
 
 Try it out below!
@@ -135,23 +148,26 @@ Try it out below!
 ```
 
 If you want to incorporate different types of arguments into your function, you can use the or operator: `||`
-
 ```{r}
-             # arguments in: from, to, and the temperature
+# arguments in: from, to, and the temperature
 temp.conv <- function(from, to, x) {
   
   # if `from` is "celsius" or "c", and `to` is "fahrenheit" or "f", then
   if(from == "celsius" || from == "c" & to == "fahrenheit" || to == "f") {
     # convert from celsius to fahrenheit
     convert <- x*1.8 + 32
-  }
-  
-  # if `from` is "fahrenheit" or "f", and `to` is "celsius" or "c", then
-  if(from == "fahrenheit" || from == "f" & to == "celsius" || to == "c") {
+    
+    # if `from` is "fahrenheit" or "f", and `to` is "celsius" or "c", then
+  } else if(from == "fahrenheit" || from == "f" & to == "celsius" || to == "c") {
     # convert from fahrenheit to celsius
     convert <- (x - 32)/1.8
+ 
+    # if `from` and `to` don't match any of the expected inputs, give warning and return NA 
+   } else {
+      warning("The inputs provided (from = '", from, "' & to = '", to,"') are not as expected. Double check spelling.")
+      return(NA)
   }
-
+  
   # return the converted value
   return(convert)
 }
