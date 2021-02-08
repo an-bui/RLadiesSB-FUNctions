@@ -78,10 +78,7 @@ $C*1.8 + 32 = F$
 
 ```{r}
 
-c_to_f <- function(x) {
-  convert <- x*1.8 + 32
-  return(convert)
-}
+
 
 ```
 
