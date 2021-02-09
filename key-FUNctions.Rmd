@@ -102,8 +102,8 @@ Let's say that we want to convert between celsius and fahrenheit, but we don't w
 In order to wrap our heads around this, let's think of the functions we just wrote, `f_to_c()` and `c_to_f()`. We can put all of the components of those functions into one, and designate arguments for switching between each conversion. It's like compressing a bunch of different operations (the conversion) into one thing (the function), and calling the right conversion every time you wanted to use the function (by using the arguments).  
 
 Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius and fahrenheit. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if/else()` statement allows us to say:  
-- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$. **else...** 
-- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  **else...*
+- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$. **else...**   
+- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  **else...**
 - **If** the inputs are neither fahrenheit or celsius, then return *NA* and give us a warning message to let us know something is wrong (this last step is optional, but can really help to troubleshoot problematic code).
 
 ```{r}
