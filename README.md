@@ -1,14 +1,5 @@
 # Putting the fun in FUNctions
 
-<style>
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60%;
-}
-</style>
-
 <img src = "figures/title.jpg"
      alt = "banner image for R-Ladies with cartoons of Mars and Saturn"
      class = "center"
