@@ -11,11 +11,19 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com/), who adapted it from Umi Hoshijima, who adapted it from [Software Carpentry](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/index.html)!
+This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com/), who adapted it from Umi Hoshijima, who adapted it from [Software Carpentry](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/index.html)!  
+
+This is a short tutorial on writing functions in R by An Bui with help from Juliette Verstaen and Sam Csik.
 
 # 1. What do functions do?
 
-**Functions** allow you to 'do' things in R. The basic structure of a function is always a term with parentheses, and your inputs go in those parentheses as **arguments**. For example:  
+**Functions** allow you to 'do' things in R. Using a function has 3 basic components:
+
+```{r, out.width = "400px", fig.align = "center", echo = FALSE}
+knitr::include_graphics("figures/function-components.jpg")
+```
+
+For example:  
 
 - `mean()` is a function that lets you **take the mean** of the input.  
 
@@ -28,7 +36,7 @@ mean(dat)
 
 - `plot()` is a function that allows you to **make a plot**, and the arguments lets you customize that plot.  
 
-```{r}
+```{r out.width = "400px", fig.align = "center"}
 # making some fake data to put into the plot
 yaxis <- sqrt(dat) + 3
 
@@ -37,12 +45,11 @@ plot(x = dat, y = yaxis)
 
 # 2. Writing your own functions
 
-Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure is:
+Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure reflects function components: 
 
-function.name <- function(arguments) {  
-      some operations here using those arguments  
-      return(output of those operations)  
-}  
+```{r, out.width = "400px", fig.align = "center", echo = FALSE}
+knitr::include_graphics("figures/function-structure.jpg")
+```
 
 Let's put that into practice by writing a function to convert temperature values!  
 
@@ -90,7 +97,7 @@ c_to_f <- function(x) {
 And check to see if it works!
 ```{r}
 
-
+c_to_f(36)
 
 ```
 
@@ -137,14 +144,9 @@ Let's try it out! I'll try converting 25 degrees celsius into fahrenheit.
 temp.conv(from = "celsius", to = "fahrenheit", x = 25)
 ```
 
-What if we supply inputs that aren't "celsius" and "fahrenheight"?
+What if we supply inputs that aren't "celsius" and "fahrenheit"?
 ```{r}
 temp.conv(from = "c", to = "f", x = 25)
-```
-
-Try it out below!
-```{r}
-
 ```
 
 If you want to incorporate different types of arguments into your function, you can use the or operator: `||`
@@ -173,10 +175,10 @@ temp.conv <- function(from, to, x) {
 }
 ```
 
-Try using the function with the new arguments!
-```{r}
+And now we can try the function with our new arguments:
 
+```{r}
+temp.conv(from = "f", to = "c", 100)
 ```
 
-
-
+Now you're ready to write your own functions!

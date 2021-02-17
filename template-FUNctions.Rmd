@@ -1,19 +1,29 @@
 ---
 title: "Putting the fun in FUNctions"
-author: "An Bui"
+author: "your name here"
 date: "24 February 2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com/), who adapted it from Umi Hoshijima, who adapted it from [Software Carpentry](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/index.html)!
+This script was adapted from [Tanya Rogers](https://outsidethequadrat.weebly.com/), who adapted it from Umi Hoshijima, who adapted it from [Software Carpentry](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/index.html)!  
+
+This is a short tutorial on writing functions in R by An Bui with help from Juliette Verstaen and Sam Csik.
 
 # 1. What do functions do?
 
-**Functions** allow you to 'do' things in R. The basic structure of a function is always a term with parentheses, and your inputs go in those parentheses as **arguments**. For example:  
+**Functions** allow you to 'do' things in R. Using a function has 3 basic components:  
+
+1. the function: this is the operation you're using  
+2. the arguments: these go into the function  
+3. the output: the result of using the function  
+
+For example:  
 
 - `mean()` is a function that lets you **take the mean** of the input.  
 
@@ -26,7 +36,7 @@ mean(dat)
 
 - `plot()` is a function that allows you to **make a plot**, and the arguments lets you customize that plot.  
 
-```{r}
+```{r out.width = "400px", fig.align = "center"}
 # making some fake data to put into the plot
 yaxis <- sqrt(dat) + 3
 
@@ -35,12 +45,14 @@ plot(x = dat, y = yaxis)
 
 # 2. Writing your own functions
 
-Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure is:
+Sometimes R doesn't have the function you want. That's ok, because you can write your own! The function called `function()` lets you write a function. The basic structure reflects function components: 
 
-function.name <- function(arguments) {  
-      some operations here using those arguments  
-      return(output of those operations)  
-}  
+```{r eval = FALSE}
+my.function <- function(arguments) {
+  output <- something(arguments)
+  return(output)
+}
+```
 
 Let's put that into practice by writing a function to convert temperature values!  
 
@@ -65,7 +77,9 @@ f_to_c <- function(x) {
 
 Yay! Now, we can see what 78 fahrenheit is in celsius.
 ```{r}
-f_to_c(78)
+
+
+
 ```
 
 ## Formatting note
@@ -78,7 +92,10 @@ $C*1.8 + 32 = F$
 
 ```{r}
 
-
+c_to_f <- function(x) {
+  convert <- x*1.8 + 32
+  return(convert)
+}
 
 ```
 
@@ -92,30 +109,36 @@ And check to see if it works!
 
 ## A bit fancier
 
-Let's say that we want to convert between celsius and fahrenheit, but we don't want to have two separate functions for each. We can write a function with more than one argument and incorporate `if()` statements in order to be able to do that.  
+Let's say that we want to convert between celsius and fahrenheit, but we don't want to have two separate functions for each. We can write a function that uses **conditionals**, which tell our code to execute different actions depending on whether a condition is true or false. To do so, we can incorporate `if()` or `if/else()` statements within our function.  
 
 In order to wrap our heads around this, let's think of the functions we just wrote, `f_to_c()` and `c_to_f()`. We can put all of the components of those functions into one, and designate arguments for switching between each conversion. It's like compressing a bunch of different operations (the conversion) into one thing (the function), and calling the right conversion every time you wanted to use the function (by using the arguments).  
 
-Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius and fahrenheit. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if()` statement allows us to say:  
-- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$.  
-- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  
+Here, we'll use the `function()` structure to make a function called `temp.conv` that converts between celsius and fahrenheit. Inside the function, we'll use `if()` statements to switch between all those conversion equations. The `if/else()` statement allows us to say:  
+- **If** the inputs are celsius and fahrenheit, then use this conversion: $x*1.8 +32$. **else...**   
+- **If** the inputs are fahrenheit and celsius, then use this conversion: $\frac{x-32}{1.8}$.  **else...**
+- **If** the inputs are neither fahrenheit or celsius, then return *NA* and give us a warning message to let us know something is wrong (this last step is optional, but can really help to troubleshoot problematic code).
 
 ```{r}
-             # arguments in: from, to, and the temperature
+
+# arguments in: from, to, and the temperature
 temp.conv <- function(from, to, x) {
   
   # if `from` is "celsius" and `to` is "fahrenheit", then
   if(from == "celsius" & to == "fahrenheit") {
     # convert from celsius to fahrenheit
     convert <- x*1.8 + 32
-  }
-  
-  # if `from` is "fahrenheit" and `to` is "celsius", then
-  if(from == "fahrenheit" & to == "celsius") {
+    
+    # if `from` is "fahrenheit" and `to` is "celsius", then
+    } else if(from == "fahrenheit" & to == "celsius") {
     # convert from fahrenheit to celsius
     convert <- (x - 32)/1.8
-  }
-
+   
+    # if inputs that don't match either of the first two conditionals are supplied, give warning and return NA 
+    } else {
+      warning("The inputs provided (from = '", from, "' & to = '", to,"') are not as expected. Double check spelling.")
+      return(NA)
+    }
+  
   # return the converted value
   return(convert)
 }
@@ -123,41 +146,49 @@ temp.conv <- function(from, to, x) {
 
 Let's try it out! I'll try converting 25 degrees celsius into fahrenheit.
 ```{r}
-temp.conv("celsius", "fahrenheit", 25)
+
+
+
 ```
 
-Try it out below!
+What if we supply inputs that aren't "celsius" and "fahrenheit"?
 ```{r}
+
+
 
 ```
 
 If you want to incorporate different types of arguments into your function, you can use the or operator: `||`
-
 ```{r}
-             # arguments in: from, to, and the temperature
+# arguments in: from, to, and the temperature
 temp.conv <- function(from, to, x) {
   
   # if `from` is "celsius" or "c", and `to` is "fahrenheit" or "f", then
   if(from == "celsius" || from == "c" & to == "fahrenheit" || to == "f") {
     # convert from celsius to fahrenheit
     convert <- x*1.8 + 32
-  }
-  
-  # if `from` is "fahrenheit" or "f", and `to` is "celsius" or "c", then
-  if(from == "fahrenheit" || from == "f" & to == "celsius" || to == "c") {
+    
+    # if `from` is "fahrenheit" or "f", and `to` is "celsius" or "c", then
+  } else if(from == "fahrenheit" || from == "f" & to == "celsius" || to == "c") {
     # convert from fahrenheit to celsius
     convert <- (x - 32)/1.8
+ 
+    # if `from` and `to` don't match any of the expected inputs, give warning and return NA 
+   } else {
+      warning("The inputs provided (from = '", from, "' & to = '", to,"') are not as expected. Double check spelling.")
+      return(NA)
   }
-
+  
   # return the converted value
   return(convert)
 }
 ```
 
-Try using the function with the new arguments!
+And now we can try the function with our new arguments:
+
 ```{r}
 
 ```
 
-
+Now you're ready to write your own functions!
 
