@@ -5,7 +5,7 @@
      class = "center"
 />
 
-Written for R-Ladies SB workshop on 24 February 2021. The knitted html document is published on [RPubs](https://rpubs.com/an-bui/fun-functions).  
+Written for R-Ladies SB workshop on 24 February 2021. The knitted html document is published on [RPubs](https://rpubs.com/an-bui/fun-functions).   
 
 ## Files
 
