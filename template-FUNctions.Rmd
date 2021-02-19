@@ -18,7 +18,7 @@ This is a short tutorial on writing functions in R by An Bui with help from Juli
 
 # 1. What do functions do?
 
-**Functions** allow you to 'do' things in R. Using a function has 3 basic components:  
+**Functions** allow you to 'do' things in R. There are 3 basic parts to handling a function:  
 
 1. the function: this is the operation you're using  
 2. the arguments: these go into the function  
@@ -251,7 +251,7 @@ Write a function that uses `dplyr::filter()` to filter planet observations by co
 
 ```
 
-```{r color-exercise-hint}
+```{r}
 color.pull <- function(data, color.choice) {
   if(color.choice %in% c("grey", "white", "blue", "red", "yellow") & 
      class(data) == "data.frame") {
