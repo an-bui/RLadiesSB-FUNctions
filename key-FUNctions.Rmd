@@ -102,7 +102,7 @@ c_to_f(36)
 ```
 
 
-## A bit fancier
+# 3. A bit fancier
 
 Let's say that we want to convert between celsius and fahrenheit, but we don't want to have two separate functions for each. We can write a function that uses **conditionals**, which tell our code to execute different actions depending on whether a condition is true or false. To do so, we can incorporate `if()` or `if/else()` statements within our function.  
 
@@ -149,6 +149,8 @@ What if we supply inputs that aren't "celsius" and "fahrenheit"?
 temp.conv(from = "c", to = "f", x = 25)
 ```
 
+# 4. Different types of arguments
+
 If you want to incorporate different types of arguments into your function, you can use the or operator: `||`
 ```{r}
 # arguments in: from, to, and the temperature
@@ -182,3 +184,67 @@ temp.conv(from = "f", to = "c", 100)
 ```
 
 Now you're ready to write your own functions!
+
+# 5. Writing practice
+
+## Simple strings
+
+Try writing a function called `planet_awesome()` that puts "is awesome!" after each planet name! We'll set up by making a vector of names of 4 planets:
+
+```{r}
+planets <- c("Mars", "Saturn", "Jupiter", "Mercury")
+```
+
+Try writing your function and seeing what the output is!
+
+```{r}
+planet_awesome <- function(x) {
+  if(class(x) == "character") {
+    awesome_statement <- paste(x, " is awesome!", sep = "")
+    return(awesome_statement)
+  } else {
+    warning("Whoops! Wasn't expecting that. The inputs should be a character.")
+    return(NA)
+  }
+}
+
+# trying it out
+planet_awesome(planets)
+```
+
+## Data cleaning
+
+You can use functions to help streamline your workflow. Let's say we have some data on our planets:
+
+```{r}
+planet_data <- data.frame(
+  planet = c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"),
+  radius_km = c(2440, 6052, 6371, 3390, 69911, 58232, 25362, 24622),
+  color = c("grey", "white", "blue", "red", "yellow", "yellow", "blue", "blue")
+)
+
+planet_data
+```
+
+Write a function that uses `dplyr::filter()` to filter planet observations by color and pull out the radius data for each color. Don't forget to check to see if your function works!
+
+```{r}
+color.pull <- function(data, color.choice) {
+  if(color.choice %in% c("grey", "white", "blue", "red", "yellow") & 
+     class(data) == "data.frame") {
+    radius_vector <- data %>% 
+      filter(color == color.choice) %>% 
+      pull(radius_km)
+    return(radius_vector)
+  } else {
+    warning("Whoops! Wasn't expecting that. Double check your inputs. Make sure that `data` is a data frame, and `color.choice` is grey, white, blue, red, or yellow.")
+    return(NA)
+  }
+}
+
+# trying it out
+color.pull(planet_data, "blue")
+
+# breaking it
+color.pull(planet_data, "black")
+```
